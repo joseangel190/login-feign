@@ -1,38 +1,35 @@
 package com.javainfinite.security.controller;
 
-import com.javainfinite.security.model.Student;
-import com.javainfinite.security.service.StudentService;
-import org.springframework.security.core.userdetails.User;
+import com.javainfinite.security.model.User;
+import com.javainfinite.security.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class StudentController {
 
-    private StudentService service;
+    private final UserService service;
 
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-    public StudentController(StudentService service, PasswordEncoder encoder) {
+    public StudentController(UserService service, PasswordEncoder encoder) {
         this.service = service;
         this.encoder = encoder;
     }
 
     /**
      * Any user can access this API - No Authentication required
-     * @param student
+     * @param user
      * @return
      */
 
     @PostMapping("/register")
-    public Student registerStudent(@RequestBody Student student) {
-        Student student1 = new Student();
-        student1.setSname(student.getSname());
-        student1.setPassword(encoder.encode(student.getPassword()));
-        student1.setSrole(student.getSrole());
-        return service.register(student1);
+    public User registerStudent(@RequestBody User user) {
+        User user1 = new User();
+        user1.setSname(user.getSname());
+        user1.setPassword(encoder.encode(user.getPassword()));
+        user1.setSrole(user.getSrole());
+        return service.register(user1);
     }
 
     /**
@@ -40,8 +37,8 @@ public class StudentController {
      * @param username
      * @return
      */
-    @GetMapping("/studentInfo")
-    public Student getStudentInfo(@RequestParam("sname") String username) {
+    @GetMapping("/info/{username}")
+    public User getStudentInfo(@PathVariable String username) {
         return service.getDetails(username);
     }
 
@@ -50,13 +47,9 @@ public class StudentController {
      * @param username
      * @return
      */
-    @GetMapping("/getStudentRoles")
-    public String getStudentRoles(@RequestParam("sname") String username) {
+    @GetMapping("/role/{username}")
+    public String getStudentRoles(@PathVariable String username) {
         return service.getStudentRoles(username);
     }
 
-    @GetMapping("/getAll")
-    public String hola(){
-        return "Acceso aprobado";
-    }
 }

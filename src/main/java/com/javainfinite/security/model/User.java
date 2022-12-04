@@ -3,8 +3,8 @@ package com.javainfinite.security.model;
 import javax.persistence.*;
 
 @Entity
-@Table
-public class Student {
+@Table(name = "usuarios")
+public class User {
 
     @Id
     @GeneratedValue

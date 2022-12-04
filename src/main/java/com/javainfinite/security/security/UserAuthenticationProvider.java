@@ -1,10 +1,9 @@
 package com.javainfinite.security.security;
 
-import com.javainfinite.security.model.Student;
-import com.javainfinite.security.repository.StudentRepository;
+import com.javainfinite.security.model.User;
+import com.javainfinite.security.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StudentAuthenticationProvider implements AuthenticationProvider {
+public class UserAuthenticationProvider implements AuthenticationProvider {
 
-    Logger logger = LoggerFactory.getLogger(StudentAuthenticationProvider.class);
+    Logger logger = LoggerFactory.getLogger(UserAuthenticationProvider.class);
 
-    private StudentRepository repository;
+    private UserRepository repository;
 
     private PasswordEncoder encoder;
 
-    public StudentAuthenticationProvider(StudentRepository repository, PasswordEncoder encoder) {
+    public UserAuthenticationProvider(UserRepository repository, PasswordEncoder encoder) {
         this.encoder = encoder;
         this.repository = repository;
     }
@@ -44,14 +43,14 @@ public class StudentAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        Student student = repository.findBySname(username);
-        if (student == null) {
+        User user = repository.findBySname(username);
+        if (user == null) {
             throw new BadCredentialsException("Details not found");
         }
 
-        if (encoder.matches(password, student.getPassword())) {
+        if (encoder.matches(password, user.getPassword())) {
             logger.info("Successfully Authenticated the user");
-            return new UsernamePasswordAuthenticationToken(username, password, getStudentRoles(student.getSrole()));
+            return new UsernamePasswordAuthenticationToken(username, password, getStudentRoles(user.getSrole()));
         } else {
             throw new BadCredentialsException("Password mismatch");
         }

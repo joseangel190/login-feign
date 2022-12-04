@@ -1,11 +1,11 @@
 package com.javainfinite.security.repository;
 
-import com.javainfinite.security.model.Student;
+import com.javainfinite.security.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    public Student findBySname(String username);
+    public User findBySname(String username);
 }
