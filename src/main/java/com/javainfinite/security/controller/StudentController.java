@@ -1,5 +1,6 @@
 package com.javainfinite.security.controller;
 
+import com.javainfinite.security.model.Person;
 import com.javainfinite.security.model.User;
 import com.javainfinite.security.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,13 +24,28 @@ public class StudentController {
      * @return
      */
 
-    @PostMapping("/register")
+    @PostMapping("/register/user")
     public User registerStudent(@RequestBody User user) {
         User user1 = new User();
         user1.setSname(user.getSname());
         user1.setPassword(encoder.encode(user.getPassword()));
-        user1.setSrole(user.getSrole());
-        return service.register(user1);
+        return service.registerUser(user1);
+    }
+
+    @PostMapping("/register/collaborator")
+    public User registerCollaborator(@RequestBody User user) {
+        User user1 = new User();
+        user1.setSname(user.getSname());
+        user1.setPassword(encoder.encode(user.getPassword()));
+        return service.registerCollaborator(user1);
+    }
+
+    @PostMapping("/register/admin")
+    public User registerAdmin(@RequestBody User user) {
+        User user1 = new User();
+        user1.setSname(user.getSname());
+        user1.setPassword(encoder.encode(user.getPassword()));
+        return service.registerAdmin(user1);
     }
 
     /**
@@ -47,9 +63,13 @@ public class StudentController {
      * @param username
      * @return
      */
-    @GetMapping("/role/{username}")
+    @GetMapping("/rol/{username}")
     public String getStudentRoles(@PathVariable String username) {
         return service.getStudentRoles(username);
     }
 
+    @GetMapping("/user/{id}")
+    public Person listById(@PathVariable Long id){
+        return service.listByUser(id);
+    }
 }

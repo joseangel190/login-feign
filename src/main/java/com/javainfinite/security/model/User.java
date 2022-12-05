@@ -50,4 +50,14 @@ public class User {
     public void setSrole(String srole) {
         this.srole = srole;
     }
+
+    public User() {
+    }
+
+    public User(Integer id, String sname, String password, String srole) {
+        this.id = id;
+        this.sname = sname;
+        this.password = password;
+        this.srole = srole;
+    }
 }

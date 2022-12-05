@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
+
+@EnableFeignClients
 @SpringBootApplication
 @EntityScan("com.javainfinite.*")
 @EnableJpaRepositories("com.javainfinite.*")
