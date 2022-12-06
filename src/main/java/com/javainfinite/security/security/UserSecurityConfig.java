@@ -14,10 +14,10 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/studentInfo").authenticated()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/getStudentRoles").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/getAll").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/info").authenticated()
+                .antMatchers("/register/user").permitAll()
+                .antMatchers("/register/collaborator").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/register/admin").hasAuthority("ROLE_ADMIN")
                 .and()
                 .httpBasic();
     }
