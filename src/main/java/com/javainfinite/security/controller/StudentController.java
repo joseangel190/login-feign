@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:4200")
 public class StudentController {
 
     private final UserService service;
@@ -17,6 +17,17 @@ public class StudentController {
     public StudentController(UserService service, PasswordEncoder encoder) {
         this.service = service;
         this.encoder = encoder;
+    }
+
+    // LOGINS
+    @GetMapping("/login/user")
+    public void start(){
+        System.out.println("login successful");
+    }
+
+    @GetMapping("/logout")
+    public String logout(){
+        return "login failure";
     }
 
     /**

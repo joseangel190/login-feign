@@ -13,11 +13,13 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors().disable();
         http.authorizeRequests()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/info").authenticated()
                 .antMatchers("/register/user").permitAll()
-                .antMatchers("/register/collaborator").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/register/admin").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/register/collaborator").permitAll()
+                .antMatchers("/register/admin").permitAll()
                 .and()
                 .httpBasic();
     }
