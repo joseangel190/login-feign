@@ -6,8 +6,10 @@ import com.javainfinite.security.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin()
 public class StudentController {
 
     private final UserService service;
@@ -19,9 +21,24 @@ public class StudentController {
         this.encoder = encoder;
     }
 
+    @GetMapping
+    public List<User> findAll(){
+        return service.findAll();
+    }
+
     // LOGINS
     @GetMapping("/login/user")
-    public void start(){
+    public void loginUser(){
+        System.out.println("login successful");
+    }
+
+    @GetMapping("/login/collaborator")
+    public void loginCollaborator(){
+        System.out.println("login successful");
+    }
+
+    @GetMapping("/login/admin")
+    public void loginAdmin(){
         System.out.println("login successful");
     }
 
@@ -30,11 +47,6 @@ public class StudentController {
         return "login failure";
     }
 
-    /**
-     * Any user can access this API - No Authentication required
-     * @param user
-     * @return
-     */
 
     @PostMapping("/register/user")
     public User registerStudent(@RequestBody User user) {
@@ -60,21 +72,11 @@ public class StudentController {
         return service.registerAdmin(user1);
     }
 
-    /**
-     * User who has logged in successfully can access this API
-     * @param username
-     * @return
-     */
     @GetMapping("/info/{username}")
     public User getStudentInfo(@PathVariable String username) {
         return service.getDetails(username);
     }
 
-    /**
-     * User who has the role ROLE_WRITE can only access this API
-     * @param username
-     * @return
-     */
     @GetMapping("/rol/{username}")
     public String getStudentRoles(@PathVariable String username) {
         return service.getStudentRoles(username);

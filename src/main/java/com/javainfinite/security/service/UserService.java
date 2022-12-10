@@ -45,7 +45,9 @@ public class UserService {
         return userRepository.findBySname(username).getSrole();
     }
 
-
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
 
 
 }
